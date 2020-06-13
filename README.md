@@ -7,19 +7,19 @@
 </h4>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/renanlucaz/plathanus?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/renanlucaz/plathanus-backend?color=%2304D361">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/renanlucaz/plathanus">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/renanlucaz/plathanus-backend">
 
 
 
   <a href="https://github.com/tgmarinho/nlw1/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/renanlucaz/plathanus">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/renanlucaz/plathanus-backend">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
    <a href="https://github.com/tgmarinho/nlw1/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/renanlucaz/plathanus?style=social">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/renanlucaz/plathanus-backend?style=social">
   </a>
 </p>
 
@@ -53,7 +53,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ## 🚀 Como executar o projeto
 
-<strong>IMPORTANTE</strong>: Para o aplicativo funcionar com o backend, primeiro instale o <a href="https://github.com/renanlucaz/plathanus">Backend da aplicação</a>
+<strong>IMPORTANTE</strong>: Para o aplicativo funcionar com o backend, primeiro instale o <a href="https://github.com/renanlucaz/plathanus-backend">Backend da aplicação</a>
 
 ### Pré-requisitos
 
@@ -67,7 +67,7 @@ Agora para iniciarmos o projeto, siga os seguintes passos:
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/renanlucaz/plathanus.git
+$ git clone https://github.com/renanlucaz/plathanus-app.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd plathanus
@@ -78,7 +78,6 @@ $ yarn install
 # Execute a aplicação pela primeira vez
 $ yarn android
 
-# O servidor inciará na porta:3333 - acesse http://localhost:3333
 ```
 
 
