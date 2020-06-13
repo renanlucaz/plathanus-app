@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { AsyncStorage, Alert } from 'react-native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import * as Animatable from 'react-native-animatable';
 
+import api from '../../services/api';
 import background from '../../assets/background.png';
-import { Button } from '../../components';
 
 import {
     Container,
@@ -24,12 +26,44 @@ import {
     AroundSelect,
     ArrowIcon,
     Background,
+    Button,
+    Text,
+    SvgIcon,
 } from './styles';
 
 const PhoneNumber = ({ navigation }) => {
     const [code, setCode] = useState('55');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phone, setPhone] = useState('');
+    const [loading, setLoading] = useState(false);
 
+    let phoneField = null;
+
+    async function handleAddPhone() {
+        const parsedPhone = `+${code}${phoneField.getRawValue()}`;
+        setLoading(true);
+        try {
+            const response = await api.post('phones', { phone: parsedPhone });
+
+            const { token } = response.data;
+
+            try {
+                await AsyncStorage.multiSet([
+                    ['@CodeApi:token', token],
+                    ['@CodeApi:phone', phone],
+                ]);
+            } catch (err) {
+                Alert.alert('Erro', err);
+            }
+
+            navigation.navigate('Pin');
+        } catch (err) {
+            Alert.alert(
+                'Ops, um erro aconteceu :(',
+                'O número informado está em um formato incorreto ou já existe no sistema.'
+            );
+        }
+        setLoading(false);
+    }
     return (
         <Container>
             <Header>
@@ -57,23 +91,38 @@ const PhoneNumber = ({ navigation }) => {
                     </AroundSelect>
                     <CountryCode>+{code}</CountryCode>
                     <Input
-                        type="custom"
+                        type="cel-phone"
                         options={{
-                            mask: `${
-                                code === '55' ? '(99) 999999999' : '999 999 999'
+                            maskType: `${
+                                code === '55' ? 'BRL' : 'INTERNATIONAL'
                             }`,
                         }}
-                        value={phoneNumber}
-                        onChangeText={(phoneValue) =>
-                            setPhoneNumber(phoneValue)
-                        }
+                        value={phone}
+                        onChangeText={(phoneValue) => setPhone(phoneValue)}
                         keyboardType="numeric"
+                        ref={(text) => {
+                            phoneField = text;
+                        }}
                     />
                 </InputGroup>
-                <Button
-                    title="Next"
-                    onPress={() => navigation.navigate('Pin')}
-                />
+                <Button onPress={() => handleAddPhone()}>
+                    {loading ? (
+                        <Animatable.View
+                            animation="rotate"
+                            iterationCount="infinite"
+                            duration={800}
+                            easing="linear"
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <SvgIcon name="loading" />
+                        </Animatable.View>
+                    ) : (
+                        <Text>Sign up</Text>
+                    )}
+                </Button>
             </PhoneContainer>
             <SignContainer>
                 <HideWithKeyboard>

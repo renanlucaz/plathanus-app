@@ -97,3 +97,29 @@ export const Background = styled.ImageBackground`
     top: 20px;
     justify-content: center;
 `;
+
+export const Button = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    padding: 25px 10px;
+    background-color: ${colors.primary};
+    height: 30px;
+    border-radius: 5px;
+`;
+
+export const Text = styled.Text`
+    color: #eee;
+`;
+
+export const ErrorMessage = styled.Text`
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: ${colors.danger};
+`;
+
+export const SvgIcon = styled(Icon)`
+    font-size: 16px;
+    color: #fff;
+`;

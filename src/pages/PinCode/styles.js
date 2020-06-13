@@ -37,11 +37,13 @@ export const Input = styled(TextInputMask)`
     text-align: center;
     border-radius: 5px;
     margin: 0 10px;
-    border: 1px solid ${colors.gray};
+    border: 1px solid ${({ status }) => status};
 `;
 
 export const Label = styled.Text`
-    color: ${colors.gray};
+    color: ${({ status }) => status};
+    justify-content: center;
+    align-items: center;
     font-size: 15px;
     margin-left: 10px;
     margin-top: 10px;
@@ -73,6 +75,16 @@ export const SubTitle = styled.Text`
     margin-top: 15px;
 `;
 
+export const Text = styled.Text`
+    color: #eee;
+`;
+
 export const Span = styled.Text`
     font-weight: bold;
+`;
+
+export const SvgIcon = styled(Icon)`
+    font-size: 18px;
+
+    color: ${({ status }) => status};
 `;

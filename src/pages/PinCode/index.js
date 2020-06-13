@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { AsyncStorage } from 'react-native';
+
+import api from '../../services/api';
 
 import { Button } from '../../components';
 import {
@@ -16,6 +19,7 @@ import {
     Title,
     SubTitle,
     Span,
+    SvgIcon,
 } from './styles';
 import background from '../../assets/background.png';
 
@@ -24,6 +28,40 @@ const PinCode = ({ navigation }) => {
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [inputColor, setInputColor] = useState('#ccc');
+    const [icon, setIcon] = useState('pin');
+
+    useEffect(() => {
+        async function fetchData() {
+            const phone = await AsyncStorage.getItem('@CodeApi:phone');
+
+            setPhoneNumber(phone);
+        }
+        fetchData();
+    }, []);
+
+    async function handleVerify() {
+        const pin = value + value1 + value2 + value3;
+
+        const token = await AsyncStorage.getItem('@CodeApi:token');
+
+        const parsedPin = { pin };
+
+        try {
+            await api.post('validations', parsedPin, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            navigation.navigate('Complete');
+
+            setInputColor('#89e0a9');
+            setIcon('check');
+        } catch (err) {
+            setInputColor('#d02c2c');
+            setIcon('close');
+        }
+    }
 
     // const inputValue = value + value1 + value2 + value3;
     return (
@@ -36,8 +74,8 @@ const PinCode = ({ navigation }) => {
                 <PageTitle>
                     <Title>Enter PIN code</Title>
                     <SubTitle>
-                        Weve send a PIN to <Span>+48 123 456 789,</Span> to
-                        verify your phone number
+                        We send a PIN to <Span>{phoneNumber},</Span> to verify
+                        your phone number
                     </SubTitle>
                 </PageTitle>
 
@@ -51,6 +89,7 @@ const PinCode = ({ navigation }) => {
                             }}
                             value={value}
                             onChangeText={(text) => setValue(text)}
+                            status={inputColor}
                         />
                         <Input
                             keyboardType="numeric"
@@ -60,6 +99,7 @@ const PinCode = ({ navigation }) => {
                             }}
                             value={value1}
                             onChangeText={(text) => setValue1(text)}
+                            status={inputColor}
                         />
                         <Input
                             keyboardType="numeric"
@@ -69,6 +109,7 @@ const PinCode = ({ navigation }) => {
                             }}
                             value={value2}
                             onChangeText={(text) => setValue2(text)}
+                            status={inputColor}
                         />
                         <Input
                             keyboardType="numeric"
@@ -78,16 +119,14 @@ const PinCode = ({ navigation }) => {
                             }}
                             value={value3}
                             onChangeText={(text) => setValue3(text)}
+                            status={inputColor}
                         />
                     </InputGroup>
-                    <Label>PIN code</Label>
+                    <Label status={inputColor}>
+                        PIN code <SvgIcon name={icon} status={inputColor} />
+                    </Label>
                 </InputContainer>
-                <Button
-                    title="Next"
-                    onPress={() => {
-                        navigation.navigate('Complete');
-                    }}
-                />
+                <Button title="Next" onPress={() => handleVerify()} />
             </Content>
 
             <Footer>
