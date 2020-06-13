@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
+
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 import background from '../../assets/background.png';
-
-import { PageTitle, Button } from '../../components';
+import { Button } from '../../components';
 
 import {
     Container,
+    PageTitle,
+    Title,
+    SubTitle,
     Label,
     InputGroup,
     Select,
@@ -18,37 +21,40 @@ import {
     SignIn,
     SignLink,
     SignContainer,
+    AroundSelect,
+    ArrowIcon,
     Background,
 } from './styles';
 
-const PinCode = () => {
+const PhoneNumber = ({ navigation }) => {
     const [code, setCode] = useState('55');
     const [phoneNumber, setPhoneNumber] = useState('');
 
     return (
         <Container>
             <Header>
-                <Icon
-                    name="arrow-left"
-                    size={30}
-                    style={{ marginBottom: 10 }}
-                />
-                <PageTitle
-                    title={`Enter your ${'\n'}phone number`}
-                    subtitle="We need your phone number so we can connect you with other
-                users. Dont worry, users chosen by you will have access to it."
-                />
+                <ArrowIcon name="arrow-left" />
+                <PageTitle>
+                    <Title>Enter your {'\n'}phone number</Title>
+                    <SubTitle>
+                        We need your phone number so we can connect you with
+                        other users. Dont worry, users chosen by you will have
+                        access to it
+                    </SubTitle>
+                </PageTitle>
             </Header>
             <PhoneContainer>
                 <Label>Phone number</Label>
                 <InputGroup>
-                    <Select
-                        selectedValue={code}
-                        onValueChange={(itemValue) => setCode(itemValue)}
-                    >
-                        <Select.Item label="🇧🇷" value="55" />
-                        <Select.Item label="🇺🇸" value="01" />
-                    </Select>
+                    <AroundSelect>
+                        <Select
+                            selectedValue={code}
+                            onValueChange={(itemValue) => setCode(itemValue)}
+                        >
+                            <Select.Item label="🇧🇷" value="55" />
+                            <Select.Item label="🇺🇸" value="01" />
+                        </Select>
+                    </AroundSelect>
                     <CountryCode>+{code}</CountryCode>
                     <Input
                         type="custom"
@@ -64,7 +70,10 @@ const PinCode = () => {
                         keyboardType="numeric"
                     />
                 </InputGroup>
-                <Button title="Next" />
+                <Button
+                    title="Next"
+                    onPress={() => navigation.navigate('Pin')}
+                />
             </PhoneContainer>
             <SignContainer>
                 <HideWithKeyboard>
@@ -78,4 +87,10 @@ const PinCode = () => {
     );
 };
 
-export default PinCode;
+PhoneNumber.propTypes = {
+    navigation: PropTypes.shape({
+        navigate: PropTypes.func.isRequired,
+    }).isRequired,
+};
+
+export default PhoneNumber;

@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { TextInputMask } from 'react-native-masked-text';
 import { Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../styles/colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -13,6 +14,19 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View``;
+
+export const PageTitle = styled.View``;
+
+export const Title = styled.Text`
+    font-size: 28px;
+    color: ${colors.black};
+`;
+
+export const SubTitle = styled.Text`
+    font-size: 16px;
+    color: ${colors.gray};
+    margin-top: 15px;
+`;
 
 export const Label = styled.Text`
     font-size: 15px;
@@ -33,17 +47,23 @@ export const InputGroup = styled.View`
 export const CountryCode = styled.Text`
     position: absolute;
     color: ${colors.gray};
-    left: 105px;
+    left: 115px;
 `;
 
 export const Select = styled.Picker`
     width: 90px;
 `;
 
+export const ArrowIcon = styled(Icon)`
+    font-size: 30px;
+    margin-bottom: 10px;
+`;
+
 export const Input = styled(TextInputMask)`
+    flex: 1;
     padding: 10px;
     padding-left: 45px;
-    flex: 1;
+    margin-left: 10px;
     border: 1px solid ${colors.lightGray};
     border-radius: 5px;
 `;
@@ -64,6 +84,11 @@ export const SignLink = styled.Text`
     text-align: center;
     margin-top: 15px;
     color: ${colors.primary};
+`;
+
+export const AroundSelect = styled.View`
+    border: 1px solid ${colors.lightGray};
+    border-radius: 5px;
 `;
 
 export const Background = styled.ImageBackground`
